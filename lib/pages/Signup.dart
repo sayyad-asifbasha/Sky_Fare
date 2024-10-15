@@ -295,7 +295,8 @@ class _SignupState extends State<Signup> {
                                       ),
                                     ),
                                     onTap: () {
-                                      print("sign up");
+                                      Navigator.pushNamedAndRemoveUntil(context, RoutesNames.loginScreen, (Route<dynamic> route) => false);
+
                                     },
                                   )
                                 ],

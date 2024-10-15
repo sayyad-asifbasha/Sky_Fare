@@ -3,6 +3,7 @@ import 'package:sky_fare/bloc/login_bloc/login_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sky_fare/bloc/login_bloc/login_event.dart';
 import 'package:sky_fare/bloc/login_bloc/login_state.dart';
+import 'package:sky_fare/config/routes/routes_name.dart';
 import 'package:sky_fare/data/enum.dart';
 import 'package:sky_fare/utils/flushbar_helper.dart';
 import 'package:sky_fare/components/loading_animation.dart';
@@ -40,7 +41,7 @@ class _LoginState extends State<Login> {
                   children: <Widget>[
                     Container(
                         width: double.infinity,
-                        margin: EdgeInsets.all(20),
+                        margin: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20),
@@ -52,7 +53,7 @@ class _LoginState extends State<Login> {
                             )]
                         ),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 40),
+                          padding:const  EdgeInsets.symmetric(horizontal: 20,vertical: 40),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -65,7 +66,7 @@ class _LoginState extends State<Login> {
                                     fontFamily: "alex"
                                 ),
                               ),
-                              SizedBox(height: 50),
+                              const SizedBox(height: 50),
                               BlocBuilder<LoginBloc,login_state>(
                                 buildWhen: (current,previous)=>current.email!=previous.email,
                                 builder: (context,state){
@@ -79,18 +80,18 @@ class _LoginState extends State<Login> {
                                         color: Colors.black,
                                       ),
                                       hintText: "Enter the email ID",
-                                      suffixIcon: Icon(Icons.email_outlined),
+                                      suffixIcon:const  Icon(Icons.email_outlined),
                                       suffixIconColor: Colors.black,
-                                      enabledBorder: UnderlineInputBorder(),
+                                      enabledBorder:const  UnderlineInputBorder(),
                                       focusedBorder: UnderlineInputBorder(
                                           borderRadius: BorderRadius.circular(1),
-                                          borderSide: BorderSide(
+                                          borderSide:const  BorderSide(
                                             color: Colors.black,
                                             width: 1.5,
                                           )
                                       ),
                                     ),
-                                    style: TextStyle(
+                                    style:const  TextStyle(
                                       fontSize: 16,
                                     ),
                                     cursorColor: Colors.black,
@@ -100,7 +101,7 @@ class _LoginState extends State<Login> {
 
                               ),
 
-                              SizedBox(height: 20,),
+                              const  SizedBox(height: 20,),
                               BlocBuilder<LoginBloc,login_state>(
                                   buildWhen: (current,previous)=>current.password!=previous.password,
                                   builder: (context,state){
@@ -113,22 +114,22 @@ class _LoginState extends State<Login> {
                                       obscureText: true,
                                       decoration: InputDecoration(
                                           labelText:"Password",
-                                          labelStyle: TextStyle(
+                                          labelStyle:const  TextStyle(
                                             color: Colors.black,
                                           ),
                                           hintText: "Enter the password",
-                                          suffixIcon: Icon(Icons.security_rounded),
+                                          suffixIcon:const  Icon(Icons.security_rounded),
                                           suffixIconColor: Colors.black,
-                                          enabledBorder: UnderlineInputBorder(),
+                                          enabledBorder: const UnderlineInputBorder(),
                                           focusedBorder: UnderlineInputBorder(
                                               borderRadius: BorderRadius.circular(1),
-                                              borderSide: BorderSide(
+                                              borderSide:const  BorderSide(
                                                   color: Colors.black,
                                                   width: 1.5
                                               )
                                           )
                                       ),
-                                      style: TextStyle(
+                                      style:const  TextStyle(
                                         fontSize: 18,
                                       ),
                                       cursorColor: Colors.black,
@@ -136,12 +137,12 @@ class _LoginState extends State<Login> {
                                     );
                                   }),
 
-                              SizedBox(height: 20,),
+                              const  SizedBox(height: 20,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
                                   InkWell(
-                                    child: Text(
+                                    child:const  Text(
                                       "Forgot Password ?",
                                       style: TextStyle(
                                         fontSize: 16,
@@ -152,7 +153,7 @@ class _LoginState extends State<Login> {
                                   )
                                 ],
                               ),
-                              SizedBox(height: 20,),
+                              const SizedBox(height: 20,),
                               BlocListener<LoginBloc,login_state>(
                                 listenWhen: (current,previous)=> current.loginStatus!=previous.loginStatus,
                                 listener: (context,state){
@@ -174,11 +175,17 @@ class _LoginState extends State<Login> {
                                           : () {
                                         context.read<LoginBloc>().add(SubmitButton());
                                       },
-                                      child: SizedBox(
+                                      style: ElevatedButton.styleFrom(
+                                        elevation: 10,
+                                        minimumSize:const  Size(200, 50),
+                                        backgroundColor: Colors.black,
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                      ),
+                                      child:  SizedBox(
                                         width: 100,  // Set a fixed width for the child content
                                         child: state.loginStatus == LoginStatus.loading
-                                            ? Loader(size: 30, color: Colors.black)
-                                            : Text(
+                                            ? const Loader(size: 30, color: Colors.white)
+                                            : const Text(
                                           "Login",
                                           textAlign: TextAlign.center,  // Center align the text
                                           style: TextStyle(
@@ -188,35 +195,31 @@ class _LoginState extends State<Login> {
                                           ),
                                         ),
                                       ),
-                                      style: ElevatedButton.styleFrom(
-                                        elevation: 10,
-                                        minimumSize: Size(200, 50),
-                                        backgroundColor: Colors.black,
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                      ),
                                     );
                                   },
                                 ),
 
                               ),
-                              SizedBox(height: 5,),
+                              const SizedBox(height: 5,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
-                                  Text(
+                                  const Text(
                                     "Don`t have an account ",
                                     style: TextStyle(
                                       fontSize: 16,
                                     ),
                                   ),
                                   InkWell(
-                                    child: Text("Sign Up",
+                                    child: const Text("Sign Up",
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.deepPurple,
                                       ),
                                     ),
-                                    onTap: (){print("sign up");},
+                                    onTap: (){
+                                      Navigator.pushNamedAndRemoveUntil(context, RoutesNames.signupScreen, (Route<dynamic> route) => false;
+                                    },
                                   )
                                 ],
                               )

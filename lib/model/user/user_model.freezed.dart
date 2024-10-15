@@ -24,6 +24,9 @@ mixin _$UserModel {
   String get token => throw _privateConstructorUsedError;
   @JsonKey(name: 'message')
   String get message => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'isAdmin')
+  bool get isAdmin => throw _privateConstructorUsedError;
 
   /// Serializes this UserModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,7 +45,9 @@ abstract class $UserModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'token') String token,
-      @JsonKey(name: 'message') String message});
+      @JsonKey(name: 'message') String message,
+      String name,
+      @JsonKey(name: 'isAdmin') bool isAdmin});
 }
 
 /// @nodoc
@@ -62,6 +67,8 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   $Res call({
     Object? token = null,
     Object? message = null,
+    Object? name = null,
+    Object? isAdmin = null,
   }) {
     return _then(_value.copyWith(
       token: null == token
@@ -72,6 +79,14 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      isAdmin: null == isAdmin
+          ? _value.isAdmin
+          : isAdmin // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -86,7 +101,9 @@ abstract class _$$UserModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'token') String token,
-      @JsonKey(name: 'message') String message});
+      @JsonKey(name: 'message') String message,
+      String name,
+      @JsonKey(name: 'isAdmin') bool isAdmin});
 }
 
 /// @nodoc
@@ -104,6 +121,8 @@ class __$$UserModelImplCopyWithImpl<$Res>
   $Res call({
     Object? token = null,
     Object? message = null,
+    Object? name = null,
+    Object? isAdmin = null,
   }) {
     return _then(_$UserModelImpl(
       token: null == token
@@ -114,6 +133,14 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      isAdmin: null == isAdmin
+          ? _value.isAdmin
+          : isAdmin // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -123,7 +150,9 @@ class __$$UserModelImplCopyWithImpl<$Res>
 class _$UserModelImpl implements _UserModel {
   _$UserModelImpl(
       {@JsonKey(name: 'token') this.token = '',
-      @JsonKey(name: 'message') this.message = ''});
+      @JsonKey(name: 'message') this.message = '',
+      this.name = '',
+      @JsonKey(name: 'isAdmin') this.isAdmin = false});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -134,10 +163,16 @@ class _$UserModelImpl implements _UserModel {
   @override
   @JsonKey(name: 'message')
   final String message;
+  @override
+  @JsonKey()
+  final String name;
+  @override
+  @JsonKey(name: 'isAdmin')
+  final bool isAdmin;
 
   @override
   String toString() {
-    return 'UserModel(token: $token, message: $message)';
+    return 'UserModel(token: $token, message: $message, name: $name, isAdmin: $isAdmin)';
   }
 
   @override
@@ -146,12 +181,14 @@ class _$UserModelImpl implements _UserModel {
         (other.runtimeType == runtimeType &&
             other is _$UserModelImpl &&
             (identical(other.token, token) || other.token == token) &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, token, message);
+  int get hashCode => Object.hash(runtimeType, token, message, name, isAdmin);
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -172,7 +209,9 @@ class _$UserModelImpl implements _UserModel {
 abstract class _UserModel implements UserModel {
   factory _UserModel(
       {@JsonKey(name: 'token') final String token,
-      @JsonKey(name: 'message') final String message}) = _$UserModelImpl;
+      @JsonKey(name: 'message') final String message,
+      final String name,
+      @JsonKey(name: 'isAdmin') final bool isAdmin}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -183,6 +222,11 @@ abstract class _UserModel implements UserModel {
   @override
   @JsonKey(name: 'message')
   String get message;
+  @override
+  String get name;
+  @override
+  @JsonKey(name: 'isAdmin')
+  bool get isAdmin;
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.

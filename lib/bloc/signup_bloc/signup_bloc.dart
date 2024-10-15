@@ -5,9 +5,9 @@ import 'package:sky_fare/data/enum.dart';
 import 'package:sky_fare/respository/auth/signup_repository.dart';
 
 class SignupBloc extends Bloc<signup_event,signup_state> {
-  SignupRepository signupRepository = SignupRepository();
+  SignupRepository signupRepository;
 
-  SignupBloc() :super(const signup_state()) {
+  SignupBloc({required this.signupRepository}) :super(const signup_state()) {
     on<EmailChanged>(_onEmailChanged);
     on<NameChanged>(_onNameChanged);
     on<PasswordChanged>(_onPasswordChanged);
