@@ -6,18 +6,17 @@ import 'package:sky_fare/pages/Signup.dart';
 import 'package:sky_fare/bloc/signup_bloc/signup_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sky_fare/respository/auth/signup_repository.dart';
-GetIt getIt=GetIt.instance;
-void main() {
-    servicesLocator();
-  runApp(
-    MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context)=>SignupBloc(signupRepository: getIt()))
-        ],
-        child: const MyApp(),
-  )
 
-  );
+GetIt getIt = GetIt.instance;
+
+void main() {
+  servicesLocator();
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (context) => SignupBloc(signupRepository: getIt()))
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -32,11 +31,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: RoutesNames.splashscreen,
+      initialRoute: RoutesNames.homeScreen,
       onGenerateRoute: Routes.generateRoute,
     );
   }
 }
-void servicesLocator(){
-  getIt.registerLazySingleton<SignupRepository>(()=>SignupRepository());
+
+void servicesLocator() {
+  getIt.registerLazySingleton<SignupRepository>(() => SignupRepository());
 }

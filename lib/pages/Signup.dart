@@ -70,14 +70,14 @@ class _SignupState extends State<Signup> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Text(
-                                "Signup",
+                                "Create an account",
                                 style: TextStyle(
-                                    fontSize: 25,
+                                    fontSize: 24,
                                     color: Colors.black,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w400,
                                     fontFamily: "alex"),
                               ),
-                              const SizedBox(height: 50),
+                              const SizedBox(height: 30),
                               BlocBuilder<SignupBloc, signup_state>(
                                   buildWhen: (current, previous) =>
                                       current.name != previous.name,
@@ -288,23 +288,23 @@ class _SignupState extends State<Signup> {
                                     }),
                               ),
                               const SizedBox(
-                                height: 5,
+                                height: 10,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   const Text(
-                                    "Already have an account ",
+                                    "Have an account? ",
                                     style: TextStyle(
                                       fontSize: 16,
                                     ),
                                   ),
                                   InkWell(
-                                    child: const Text(
-                                      "Signin",
+                                    child: Text(
+                                      "Log in",
                                       style: TextStyle(
                                         fontSize: 18,
-                                        color: Colors.deepPurple,
+                                        color: Colors.blueAccent.shade700,
                                       ),
                                     ),
                                     onTap: () {

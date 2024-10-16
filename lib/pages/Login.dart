@@ -65,15 +65,28 @@ class _LoginState extends State<Login> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text(
-                                    "Login",
-                                    style: TextStyle(
-                                        fontSize: 25,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: "alex"),
+                                  const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        "Welcome back",
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: "alex"),
+                                      ),
+                                      Text(
+                                        "Please enter your details to login.",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: "alex"),
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(height: 50),
+                                  const SizedBox(height: 30),
                                   BlocBuilder<LoginBloc, login_state>(
                                     buildWhen: (current, previous) =>
                                         current.email != previous.email,
@@ -175,11 +188,11 @@ class _LoginState extends State<Login> {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: <Widget>[
                                       InkWell(
-                                        child: const Text(
-                                          "Forgot Password ?",
+                                        child: Text(
+                                          "Forgot Password?",
                                           style: TextStyle(
                                             fontSize: 16,
-                                            color: Colors.deepPurple,
+                                            color: Colors.blueAccent.shade700,
                                           ),
                                         ),
                                         onTap: () {
@@ -189,7 +202,7 @@ class _LoginState extends State<Login> {
                                     ],
                                   ),
                                   const SizedBox(
-                                    height: 20,
+                                    height: 10,
                                   ),
                                   BlocListener<LoginBloc, login_state>(
                                     listenWhen: (current, previous) =>
@@ -264,23 +277,23 @@ class _LoginState extends State<Login> {
                                     ),
                                   ),
                                   const SizedBox(
-                                    height: 5,
+                                    height: 20,
                                   ),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       const Text(
-                                        "Don`t have an account ",
+                                        "Don`t have an account? ",
                                         style: TextStyle(
                                           fontSize: 16,
                                         ),
                                       ),
                                       InkWell(
-                                        child: const Text(
-                                          "Sign Up",
+                                        child: Text(
+                                          "Register",
                                           style: TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.deepPurple,
+                                            fontSize: 16,
+                                            color: Colors.blueAccent.shade700,
                                           ),
                                         ),
                                         onTap: () {
