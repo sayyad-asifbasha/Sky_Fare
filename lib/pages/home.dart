@@ -91,6 +91,7 @@
 import 'package:flutter/material.dart';
 import 'package:sky_fare/config/routes/routes_name.dart';
 import 'package:sky_fare/services/session_manager/session_controller.dart';
+import 'package:sky_fare/pages/landing_page.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -127,6 +128,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
           children: [
@@ -139,7 +141,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 });
               },
               children: <Widget>[
-                Container(color: Colors.blue),
+                LandingPage(),
                 Container(color: Colors.yellow),
                 Container(color: Colors.green),
               ],
