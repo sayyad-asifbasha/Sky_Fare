@@ -6,7 +6,7 @@ part 'signup_model.g.dart';
 class SignupModel with _$SignupModel
 {
   factory SignupModel({
-    @Default('') @JsonKey(name:'success')bool success,
+    @Default(false) @JsonKey(name:'success')bool success,
     @Default('') @JsonKey(name:'message')String message,
   })=_SignupModel;
 

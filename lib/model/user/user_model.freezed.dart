@@ -24,6 +24,7 @@ mixin _$UserModel {
   String get token => throw _privateConstructorUsedError;
   @JsonKey(name: 'message')
   String get message => throw _privateConstructorUsedError;
+  @JsonKey(name: 'name')
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'isAdmin')
   bool get isAdmin => throw _privateConstructorUsedError;
@@ -46,7 +47,7 @@ abstract class $UserModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'token') String token,
       @JsonKey(name: 'message') String message,
-      String name,
+      @JsonKey(name: 'name') String name,
       @JsonKey(name: 'isAdmin') bool isAdmin});
 }
 
@@ -102,7 +103,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'token') String token,
       @JsonKey(name: 'message') String message,
-      String name,
+      @JsonKey(name: 'name') String name,
       @JsonKey(name: 'isAdmin') bool isAdmin});
 }
 
@@ -151,7 +152,7 @@ class _$UserModelImpl implements _UserModel {
   _$UserModelImpl(
       {@JsonKey(name: 'token') this.token = '',
       @JsonKey(name: 'message') this.message = '',
-      this.name = '',
+      @JsonKey(name: 'name') this.name = '',
       @JsonKey(name: 'isAdmin') this.isAdmin = false});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -164,7 +165,7 @@ class _$UserModelImpl implements _UserModel {
   @JsonKey(name: 'message')
   final String message;
   @override
-  @JsonKey()
+  @JsonKey(name: 'name')
   final String name;
   @override
   @JsonKey(name: 'isAdmin')
@@ -210,7 +211,7 @@ abstract class _UserModel implements UserModel {
   factory _UserModel(
       {@JsonKey(name: 'token') final String token,
       @JsonKey(name: 'message') final String message,
-      final String name,
+      @JsonKey(name: 'name') final String name,
       @JsonKey(name: 'isAdmin') final bool isAdmin}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
@@ -223,6 +224,7 @@ abstract class _UserModel implements UserModel {
   @JsonKey(name: 'message')
   String get message;
   @override
+  @JsonKey(name: 'name')
   String get name;
   @override
   @JsonKey(name: 'isAdmin')
