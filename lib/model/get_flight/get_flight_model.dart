@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 part 'get_flight_model.g.dart';
 part 'get_flight_model.freezed.dart';
 
@@ -9,6 +8,9 @@ class GetFlightModel with _$GetFlightModel {
     @Default(false) @JsonKey(name: 'success') bool success,
     @Default('') @JsonKey(name: 'message') String message,
     @Default([]) @JsonKey(name: 'flights') List<FlightDetails> flights,
+    @Default([])@JsonKey(name: 'sources') List<String> sources,
+    @Default([])@JsonKey(name: 'destinations') List<String> destinations,
+
   }) = _GetFlightModel;
 
   factory GetFlightModel.fromJson(Map<String, dynamic> json) =>

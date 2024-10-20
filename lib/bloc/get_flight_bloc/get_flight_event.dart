@@ -38,3 +38,6 @@ class ToDateChanged extends get_flight_event
 }
 
 class GetFlightButton extends get_flight_event{}
+
+class GetSourceList  extends get_flight_event{}
+class GetDestinationList extends get_flight_event{}

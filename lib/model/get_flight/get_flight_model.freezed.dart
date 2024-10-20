@@ -26,6 +26,10 @@ mixin _$GetFlightModel {
   String get message => throw _privateConstructorUsedError;
   @JsonKey(name: 'flights')
   List<FlightDetails> get flights => throw _privateConstructorUsedError;
+  @JsonKey(name: 'sources')
+  List<String> get sources => throw _privateConstructorUsedError;
+  @JsonKey(name: 'destinations')
+  List<String> get destinations => throw _privateConstructorUsedError;
 
   /// Serializes this GetFlightModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,7 +50,9 @@ abstract class $GetFlightModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'success') bool success,
       @JsonKey(name: 'message') String message,
-      @JsonKey(name: 'flights') List<FlightDetails> flights});
+      @JsonKey(name: 'flights') List<FlightDetails> flights,
+      @JsonKey(name: 'sources') List<String> sources,
+      @JsonKey(name: 'destinations') List<String> destinations});
 }
 
 /// @nodoc
@@ -67,6 +73,8 @@ class _$GetFlightModelCopyWithImpl<$Res, $Val extends GetFlightModel>
     Object? success = null,
     Object? message = null,
     Object? flights = null,
+    Object? sources = null,
+    Object? destinations = null,
   }) {
     return _then(_value.copyWith(
       success: null == success
@@ -81,6 +89,14 @@ class _$GetFlightModelCopyWithImpl<$Res, $Val extends GetFlightModel>
           ? _value.flights
           : flights // ignore: cast_nullable_to_non_nullable
               as List<FlightDetails>,
+      sources: null == sources
+          ? _value.sources
+          : sources // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      destinations: null == destinations
+          ? _value.destinations
+          : destinations // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -96,7 +112,9 @@ abstract class _$$GetFlightModelImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'success') bool success,
       @JsonKey(name: 'message') String message,
-      @JsonKey(name: 'flights') List<FlightDetails> flights});
+      @JsonKey(name: 'flights') List<FlightDetails> flights,
+      @JsonKey(name: 'sources') List<String> sources,
+      @JsonKey(name: 'destinations') List<String> destinations});
 }
 
 /// @nodoc
@@ -115,6 +133,8 @@ class __$$GetFlightModelImplCopyWithImpl<$Res>
     Object? success = null,
     Object? message = null,
     Object? flights = null,
+    Object? sources = null,
+    Object? destinations = null,
   }) {
     return _then(_$GetFlightModelImpl(
       success: null == success
@@ -129,6 +149,14 @@ class __$$GetFlightModelImplCopyWithImpl<$Res>
           ? _value._flights
           : flights // ignore: cast_nullable_to_non_nullable
               as List<FlightDetails>,
+      sources: null == sources
+          ? _value._sources
+          : sources // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      destinations: null == destinations
+          ? _value._destinations
+          : destinations // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -139,8 +167,13 @@ class _$GetFlightModelImpl implements _GetFlightModel {
   _$GetFlightModelImpl(
       {@JsonKey(name: 'success') this.success = false,
       @JsonKey(name: 'message') this.message = '',
-      @JsonKey(name: 'flights') final List<FlightDetails> flights = const []})
-      : _flights = flights;
+      @JsonKey(name: 'flights') final List<FlightDetails> flights = const [],
+      @JsonKey(name: 'sources') final List<String> sources = const [],
+      @JsonKey(name: 'destinations')
+      final List<String> destinations = const []})
+      : _flights = flights,
+        _sources = sources,
+        _destinations = destinations;
 
   factory _$GetFlightModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$GetFlightModelImplFromJson(json);
@@ -160,9 +193,27 @@ class _$GetFlightModelImpl implements _GetFlightModel {
     return EqualUnmodifiableListView(_flights);
   }
 
+  final List<String> _sources;
+  @override
+  @JsonKey(name: 'sources')
+  List<String> get sources {
+    if (_sources is EqualUnmodifiableListView) return _sources;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_sources);
+  }
+
+  final List<String> _destinations;
+  @override
+  @JsonKey(name: 'destinations')
+  List<String> get destinations {
+    if (_destinations is EqualUnmodifiableListView) return _destinations;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_destinations);
+  }
+
   @override
   String toString() {
-    return 'GetFlightModel(success: $success, message: $message, flights: $flights)';
+    return 'GetFlightModel(success: $success, message: $message, flights: $flights, sources: $sources, destinations: $destinations)';
   }
 
   @override
@@ -172,13 +223,21 @@ class _$GetFlightModelImpl implements _GetFlightModel {
             other is _$GetFlightModelImpl &&
             (identical(other.success, success) || other.success == success) &&
             (identical(other.message, message) || other.message == message) &&
-            const DeepCollectionEquality().equals(other._flights, _flights));
+            const DeepCollectionEquality().equals(other._flights, _flights) &&
+            const DeepCollectionEquality().equals(other._sources, _sources) &&
+            const DeepCollectionEquality()
+                .equals(other._destinations, _destinations));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, success, message,
-      const DeepCollectionEquality().hash(_flights));
+  int get hashCode => Object.hash(
+      runtimeType,
+      success,
+      message,
+      const DeepCollectionEquality().hash(_flights),
+      const DeepCollectionEquality().hash(_sources),
+      const DeepCollectionEquality().hash(_destinations));
 
   /// Create a copy of GetFlightModel
   /// with the given fields replaced by the non-null parameter values.
@@ -201,7 +260,9 @@ abstract class _GetFlightModel implements GetFlightModel {
   factory _GetFlightModel(
           {@JsonKey(name: 'success') final bool success,
           @JsonKey(name: 'message') final String message,
-          @JsonKey(name: 'flights') final List<FlightDetails> flights}) =
+          @JsonKey(name: 'flights') final List<FlightDetails> flights,
+          @JsonKey(name: 'sources') final List<String> sources,
+          @JsonKey(name: 'destinations') final List<String> destinations}) =
       _$GetFlightModelImpl;
 
   factory _GetFlightModel.fromJson(Map<String, dynamic> json) =
@@ -216,6 +277,12 @@ abstract class _GetFlightModel implements GetFlightModel {
   @override
   @JsonKey(name: 'flights')
   List<FlightDetails> get flights;
+  @override
+  @JsonKey(name: 'sources')
+  List<String> get sources;
+  @override
+  @JsonKey(name: 'destinations')
+  List<String> get destinations;
 
   /// Create a copy of GetFlightModel
   /// with the given fields replaced by the non-null parameter values.

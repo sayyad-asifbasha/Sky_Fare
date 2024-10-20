@@ -48,7 +48,6 @@ class LoginBloc extends Bloc<login_event, login_state> {
             message: "Login Successfully", loginStatus: LoginStatus.success));
 
       var val=  await SessionController().getUserInPreference('name');
-      print(val);
       } else {
         emit(state.copyWith(
             message: value.message, loginStatus: LoginStatus.error));

@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:sky_fare/bloc/get_flight_bloc/get_flight_bloc.dart';
 import 'package:sky_fare/config/routes/routes.dart';
 import 'package:sky_fare/config/routes/routes_name.dart';
 import 'package:sky_fare/pages/Signup.dart';
 import 'package:sky_fare/bloc/signup_bloc/signup_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sky_fare/respository/auth/signup_repository.dart';
-
+import 'package:sky_fare/respository/flight/get_flight_repository.dart';
 GetIt getIt = GetIt.instance;
-
 void main() {
   servicesLocator();
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider(create: (context) => SignupBloc(signupRepository: getIt()))
-    ],
-    child: const MyApp(),
-  ));
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => SignupBloc(signupRepository: getIt()),
+        ),
+        BlocProvider(
+          create: (context) => GetFlightBloc(getFlightRepository: getIt()),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -39,4 +46,5 @@ class MyApp extends StatelessWidget {
 
 void servicesLocator() {
   getIt.registerLazySingleton<SignupRepository>(() => SignupRepository());
+  getIt.registerLazySingleton<GetFlightRepository>(() => GetFlightRepository());
 }

@@ -14,6 +14,14 @@ _$GetFlightModelImpl _$$GetFlightModelImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => FlightDetails.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      sources: (json['sources'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      destinations: (json['destinations'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$GetFlightModelImplToJson(
@@ -22,6 +30,8 @@ Map<String, dynamic> _$$GetFlightModelImplToJson(
       'success': instance.success,
       'message': instance.message,
       'flights': instance.flights,
+      'sources': instance.sources,
+      'destinations': instance.destinations,
     };
 
 _$FlightDetailsImpl _$$FlightDetailsImplFromJson(Map<String, dynamic> json) =>
