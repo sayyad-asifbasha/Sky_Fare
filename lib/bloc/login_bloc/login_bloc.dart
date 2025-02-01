@@ -2,7 +2,6 @@ import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:bloc/bloc.dart';
 import 'package:sky_fare/bloc/login_bloc/login_state.dart';
 import 'package:sky_fare/bloc/login_bloc/login_event.dart';
-import 'package:sky_fare/model/user/user_model.dart';
 import 'package:sky_fare/respository/auth/login_repository.dart';
 import 'package:sky_fare/data/enum.dart';
 import 'package:sky_fare/services/session_manager/session_controller.dart';

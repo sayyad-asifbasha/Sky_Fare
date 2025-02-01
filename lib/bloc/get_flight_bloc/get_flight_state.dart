@@ -11,7 +11,7 @@ class get_flight_state extends Equatable {
       DateTime? toDate,
         this.sourceList = const [],
         this.destinationList = const [],
-
+        this.returnFlights=const[],
       this.flights = const [],
       this.getFlightStatus = GetFlightStatus.initial})
       : fromDate = fromDate ?? DateTime.now(),
@@ -24,6 +24,7 @@ class get_flight_state extends Equatable {
   final List<String> sourceList;
   final List<String> destinationList;
   final List<FlightDetails> flights;
+  final List<FlightDetails> returnFlights;
   final GetFlightStatus getFlightStatus;
   get_flight_state copyWith({
     String? source,
@@ -33,6 +34,7 @@ class get_flight_state extends Equatable {
     DateTime? toDate,
     GetFlightStatus? getFlightStatus,
     List<FlightDetails>? flights,
+    List<FlightDetails>? returnFlights,
     List<String>? sourceList,
     List<String>? destinationList,
 
@@ -43,6 +45,7 @@ class get_flight_state extends Equatable {
       message: message ?? this.message,
       fromDate: fromDate ?? this.fromDate,
       flights: flights ?? this.flights,
+      returnFlights: returnFlights ?? this.returnFlights,
       sourceList: sourceList ?? this.sourceList,
       destinationList: destinationList ?? this.destinationList,
       toDate: toDate ?? this.toDate,
@@ -52,5 +55,5 @@ class get_flight_state extends Equatable {
 
   @override
   List<Object> get props =>
-      [source, destination, message, fromDate, toDate, getFlightStatus];
+      [source, destination, message, fromDate, toDate, getFlightStatus,returnFlights,flights,sourceList,destinationList];
 }

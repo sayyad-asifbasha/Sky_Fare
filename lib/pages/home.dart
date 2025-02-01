@@ -89,8 +89,6 @@
 //   );
 // }
 import 'package:flutter/material.dart';
-import 'package:sky_fare/config/routes/routes_name.dart';
-import 'package:sky_fare/services/session_manager/session_controller.dart';
 import 'package:sky_fare/pages/landing_page.dart';
 
 class Home extends StatefulWidget {

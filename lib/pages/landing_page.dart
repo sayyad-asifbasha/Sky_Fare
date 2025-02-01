@@ -4,9 +4,12 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:sky_fare/bloc/get_flight_bloc/get_flight_bloc.dart';
 import 'package:sky_fare/bloc/get_flight_bloc/get_flight_event.dart';
 import 'package:sky_fare/bloc/get_flight_bloc/get_flight_state.dart';
+import 'package:sky_fare/config/routes/routes.dart';
+import 'package:sky_fare/config/routes/routes_name.dart';
 import 'package:sky_fare/data/enum.dart';
-import 'package:sky_fare/services/session_manager/session_controller.dart';
 import 'package:sky_fare/utils/flushbar_helper.dart';
+
+import '../components/loading_animation.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -17,7 +20,6 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
   final _key = GlobalKey<FormState>();
-  late final String _name;
   late String _fromDate =
       '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
   late String _toDate =
@@ -26,7 +28,6 @@ class _LandingPageState extends State<LandingPage> {
   late GetFlightBloc _getFlightBloc;
   late TextEditingController _sourceController;
   late TextEditingController _destinationController;
-  late List<String> _sourceList;
 
 
   @override
@@ -35,14 +36,11 @@ class _LandingPageState extends State<LandingPage> {
     _getFlightBloc=BlocProvider.of<GetFlightBloc>(context);
     _sourceController = TextEditingController(text: _getFlightBloc.state.source);
     _destinationController = TextEditingController(text: _getFlightBloc.state.destination);
-    (context).read<GetFlightBloc>().add(GetSourceList());
-    (context).read<GetFlightBloc>().add(GetDestinationList());
-
+    _getFlightBloc.add(GetList());
   }
 
   String _selectOption = 'roundTrip';
   void _swapFromAndTo() {
-    // Get current 'From' and 'To' values from the bloc's state
     final currentSource = context.read<GetFlightBloc>().state.source;
     final currentDestination = context.read<GetFlightBloc>().state.destination;
 
@@ -91,7 +89,7 @@ class _LandingPageState extends State<LandingPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
+               Container(
                 height: 80,
                 child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -137,157 +135,186 @@ class _LandingPageState extends State<LandingPage> {
                       key: _key,
                       child: Column(
                         children: <Widget>[
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.start,
+                          //   children: [
+                          //     Padding(
+                          //       padding: const EdgeInsets.only(left: 15),
+                          //       child: Radio<String>(
+                          //         fillColor: MaterialStateColor.resolveWith(
+                          //             (states) => Colors.black),
+                          //         focusColor: MaterialStateColor.resolveWith(
+                          //             (states) => Colors.black),
+                          //         value: 'oneWay',
+                          //         groupValue: _selectOption,
+                          //         onChanged: (value) {
+                          //           setState(() {
+                          //             _selectOption = value!;
+                          //           });
+                          //         },
+                          //       ),
+                          //     ),
+                          //     const Text('One Way'),
+                          //     const SizedBox(width: 60),
+                          //     Radio<String>(
+                          //       value: 'roundTrip',
+                          //       fillColor: MaterialStateColor.resolveWith(
+                          //           (states) => Colors.black),
+                          //       focusColor: MaterialStateColor.resolveWith(
+                          //           (states) => Colors.black),
+                          //       groupValue: _selectOption,
+                          //       onChanged: (value) {
+                          //         setState(() {
+                          //           _selectOption = value!;
+                          //         });
+                          //       },
+                          //     ),
+                          //     const Text('Round Trip'),
+                          //   ],
+                          // ),
+                         const SizedBox(height: 10,),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 15),
-                                child: Radio<String>(
-                                  fillColor: MaterialStateColor.resolveWith(
-                                      (states) => Colors.black),
-                                  focusColor: MaterialStateColor.resolveWith(
-                                      (states) => Colors.black),
-                                  value: 'oneWay',
-                                  groupValue: _selectOption,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectOption = value!;
-                                    });
-                                  },
-                                ),
-                              ),
-                              const Text('One Way'),
-                              const SizedBox(width: 60),
-                              Radio<String>(
-                                value: 'roundTrip',
-                                fillColor: MaterialStateColor.resolveWith(
-                                    (states) => Colors.black),
-                                focusColor: MaterialStateColor.resolveWith(
-                                    (states) => Colors.black),
-                                groupValue: _selectOption,
-                                onChanged: (value) {
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              ElevatedButton(
+                                onPressed: (){
                                   setState(() {
-                                    _selectOption = value!;
+                                    _selectOption="oneWay";
                                   });
                                 },
-                              ),
-                              const Text('Round Trip'),
-                            ],
-                          ),
-                          BlocBuilder<GetFlightBloc,get_flight_state>(
-                            buildWhen: (current,previous)=>current.source!=previous.source,
-                              builder: (context,state)
-                          {
-                            _sourceList=state.sourceList;
-                            return Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 15, right: 15, bottom: 15),
-                              // child:Autocomplete<String>(optionsBuilder: (TextEditingValue textEditingValue)
-                              // {
-                              //   if (textEditingValue.text.isEmpty) {
-                              //     return const Iterable<String>.empty();
-                              //   }
-                              //   return state.sourceList.where((String city)
-                              //   {
-                              //     return city.toLowerCase().contains(textEditingValue.text.toLowerCase());
-                              //   });
-                              // },
-                              // onSelected: (value)
-                              //   {
-                              //     print(value);
-                              //   },
-                              //   fieldViewBuilder: ( TextEditingController textEditingController)
-                              //     {
-                              //       return   // TextFormField(
-                              //       //   controller: _sourceController,
-                              //       //   onChanged: (value){
-                              //       //     context.read<GetFlightBloc>().add(SourceChanged(source: value));
-                              //       //   },
-                              //       //   validator: (value) {
-                              //       //     if (value!.isEmpty) {
-                              //       //       return '*required';
-                              //       //     }
-                              //       //     return null;
-                              //       //   },
-                              //       //   decoration: InputDecoration(
-                              //       //     prefixIcon: Icon(Icons.flight_takeoff_rounded),
-                              //       //     labelText: "From",
-                              //       //     labelStyle: TextStyle(
-                              //       //         color: Colors.grey.shade700, fontSize: 18),
-                              //       //     hintText: "Origin",
-                              //       //     hintStyle: TextStyle(
-                              //       //         color: Colors.grey.shade700, fontSize: 16),
-                              //       //     enabledBorder: const UnderlineInputBorder(),
-                              //       //     focusedBorder: const UnderlineInputBorder(
-                              //       //         borderSide: BorderSide(
-                              //       //             color: Colors.black, width: 2)),
-                              //       //     contentPadding:
-                              //       //     const EdgeInsets.only(top: 0, bottom: 0),
-                              //       //   ),
-                              //       // ),
-                              //     }
-                              // ),
-                              child:TextFormField(
-                                controller: _sourceController,
-                                onChanged: (value){
-                                  context.read<GetFlightBloc>().add(SourceChanged(source: value));
-                                },
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return '*required';
-                                  }
-                                  return null;
-                                },
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.flight_takeoff_rounded),
-                                  labelText: "From",
-                                  labelStyle: TextStyle(
-                                      color: Colors.grey.shade700, fontSize: 18),
-                                  hintText: "Origin",
-                                  hintStyle: TextStyle(
-                                      color: Colors.grey.shade700, fontSize: 16),
-                                  enabledBorder: const UnderlineInputBorder(),
-                                  focusedBorder: const UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.black, width: 2)),
-                                  contentPadding:
-                                  const EdgeInsets.only(top: 0, bottom: 0),
+                                style: ElevatedButton.styleFrom(
+                                    elevation: _selectOption=='roundTrip'? 0:2,
+                                    backgroundColor:_selectOption=='roundTrip'? Colors.grey.shade400:Colors.black,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))
+                                ),
+                                child: Text("One Way",
+                                  style: TextStyle(
+                                      color:_selectOption=='roundTrip'?  Colors.black54:Colors.white,
+                                      fontSize: 16
+                                  ),
                                 ),
                               ),
+                              ElevatedButton(
+                                onPressed: (){
+                                  setState(() {
+                                    _selectOption="roundTrip";
+                                  });
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  elevation: _selectOption=='oneWay'? 0:2,
+                                    backgroundColor:_selectOption=='oneWay'? Colors.grey.shade400:Colors.black,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))
+                                ),
+                                child: Text("Round Trip",
+                                  style: TextStyle(
+                                      color:_selectOption=='oneWay'?  Colors.black54:Colors.white,
+                                      fontSize: 16
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(height: 10,),
+
+                          BlocBuilder<GetFlightBloc,get_flight_state>(
+                              buildWhen: (current,previous)=>current.source!=previous.source|| current.sourceList != previous.sourceList,
+                              builder: (context,state)
+                              {
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 15, right: 15, bottom: 15),
+                                  child: TypeAheadField<String>(
+                                    builder: (context,controller, focusNode) {
+                                      return TextFormField(
+                                        controller: _sourceController,
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return '*required';
+                                            }
+                                            return null;
+                                          },
+                                        focusNode: focusNode,   // Use the provided focus node
+                                        decoration: InputDecoration(
+                                          prefixIcon:const Icon(Icons.flight_takeoff_rounded),
+                                          labelText: "From",
+                                          labelStyle: TextStyle(
+                                              color: Colors.grey.shade700, fontSize: 18),
+                                          hintText: "Origin",
+                                          hintStyle: TextStyle(
+                                              color: Colors.grey.shade700, fontSize: 16),
+                                          enabledBorder: const UnderlineInputBorder(),
+                                          focusedBorder: const UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.black, width: 2)),
+                                          contentPadding:
+                                          const EdgeInsets.only(top: 0, bottom: 0),
+                                        ),
+                                      );
+                                    },
+                                    itemBuilder: (context,suggestion){
+                                      return ListTile(
+                                        title: Text(suggestion),
+                                      );
+                                    },
+                                    onSelected:(suggestion) {
+                                      _sourceController.text = suggestion;
+                                      context.read<GetFlightBloc>().add(SourceChanged(source: suggestion));
+                                    },
+                                    suggestionsCallback: (pattern)
+                                    {
+                                      return state.sourceList.where((source)=>source.toLowerCase().contains(pattern.toLowerCase())).toList();
+                                    },
+                                  ),
+
                             );
                           }),
                           BlocBuilder<GetFlightBloc,get_flight_state>(
-                            buildWhen: (current,previous)=>current.destination!=previous.destination,
+                            buildWhen: (current,previous)=>current.destination!=previous.destination || current.sourceList != previous.sourceList,
                               builder: (context,state){
-                                return Padding(
+                               return Padding(
                                   padding:
                                   const EdgeInsets.only(left: 15, right: 15, bottom: 0),
-                                  child: TextFormField(
-                                    controller: _destinationController,
-                                    onChanged: (value){
-                                      (context).read<GetFlightBloc>().add(DestinationChanged(destination: value));
+                                  child: TypeAheadField<String>(
+                                    builder: (context,controller, focusNode) {
+                                      return TextFormField(
+                                        controller: _destinationController,
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return '*required';
+                                          }
+                                          return null;
+                                        },
+                                        focusNode: focusNode,   // Use the provided focus node
+                                        decoration: InputDecoration(
+                                            prefixIcon:const Icon(Icons.flight_land_rounded),
+                                            labelText: "To",
+                                            labelStyle: TextStyle(
+                                                color: Colors.grey.shade700, fontSize: 18),
+                                            hintText: "Destination",
+                                            hintStyle: TextStyle(
+                                                color: Colors.grey.shade700, fontSize: 16),
+                                            enabledBorder: const UnderlineInputBorder(),
+                                            focusedBorder: const UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.black, width: 2)),
+                                            contentPadding:
+                                            const EdgeInsets.only(top: 0, bottom: 0),
+                                          ),
+                                      );
                                     },
-                                    validator: (value){
-                                      if (value!.isEmpty) {
-                                        return '*required';
-                                      }
-                                      return null;
+                                    itemBuilder: (context,suggestion){
+                                      return ListTile(
+                                        title: Text(suggestion),
+                                      );
                                     },
-                                    decoration: InputDecoration(
-                                      prefixIcon:const Icon(Icons.flight_land_rounded),
-                                      labelText: "To",
-                                      labelStyle: TextStyle(
-                                          color: Colors.grey.shade700, fontSize: 18),
-                                      hintText: "Destination",
-                                      hintStyle: TextStyle(
-                                          color: Colors.grey.shade700, fontSize: 16),
-                                      enabledBorder: const UnderlineInputBorder(),
-                                      focusedBorder: const UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Colors.black, width: 2)),
-                                      contentPadding:
-                                      const EdgeInsets.only(top: 0, bottom: 0),
-                                    ),
+                                    onSelected:(suggestion) {
+                                      _destinationController.text = suggestion;
+                                      context.read<GetFlightBloc>().add(DestinationChanged(destination: suggestion));
+                                    },
+                                    suggestionsCallback: (pattern)
+                                    {
+                                      return state.sourceList.where((source)=>source.toLowerCase().contains(pattern.toLowerCase())).toList();
+                                    },
                                   ),
                                 );
                               }),
@@ -306,8 +333,8 @@ class _LandingPageState extends State<LandingPage> {
                                           ? 150
                                           : 300,
                                       height: 60,
-                                      padding: EdgeInsets.only(left: 10),
-                                      decoration: BoxDecoration(
+                                      padding: const EdgeInsets.only(left: 10),
+                                      decoration:const  BoxDecoration(
                                           border: Border(
                                               bottom: BorderSide(
                                                   color: Colors.black,
@@ -316,12 +343,12 @@ class _LandingPageState extends State<LandingPage> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: <Widget>[
-                                          Icon(
+                                          const  Icon(
                                             Icons.calendar_month_rounded,
                                             size: 30,
                                             color: Colors.black,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 10,
                                           ),
                                           Column(
@@ -413,7 +440,7 @@ class _LandingPageState extends State<LandingPage> {
                           {
                             if(state.getFlightStatus==GetFlightStatus.success)
                               {
-                                print("success");
+                                Navigator.pushNamed(context,RoutesNames.oneWayBookingScreen);
                               }
                             else if(state.getFlightStatus==GetFlightStatus.error)
                               {
@@ -425,9 +452,10 @@ class _LandingPageState extends State<LandingPage> {
                                 builder: (context,state)
                                 {
                                   return  ElevatedButton(
-                                    onPressed: () {
+                                    onPressed: state.getFlightStatus==GetFlightStatus.loading?(){}:
+                                        () {
                                       if (_key.currentState!.validate()) {
-                                        (context).read<GetFlightBloc>().add(GetFlightButton());
+                                        _selectOption=='oneWay'? (context).read<GetFlightBloc>().add(GetFlightButton()):(context).read<GetFlightBloc>().add(GetRoundTrip());
                                       } else {
                                         FlushBarHelper.flushBarErrorMessage("Please fill all required fields", context);
                                       }
@@ -439,17 +467,23 @@ class _LandingPageState extends State<LandingPage> {
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(10)),
                                     ),
-                                    child: const SizedBox(
+                                    child:SizedBox(
                                       width: 100,
                                       // Set a fixed width for the child content
-                                      child: const Text(
+                                      child: state.getFlightStatus ==
+                                          GetFlightStatus.loading
+                                          ? const Loader(
+                                          size: 30,
+                                          color: Colors.white)
+                                          : const Text(
                                         "Book Now",
                                         textAlign: TextAlign.center,
                                         // Center align the text
                                         style: TextStyle(
                                           fontSize: 18,
                                           color: Colors.white,
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight:
+                                          FontWeight.w600,
                                         ),
                                       ),
                                     ),
@@ -465,7 +499,7 @@ class _LandingPageState extends State<LandingPage> {
                       ),
                     ),
                     Positioned(
-                      top: 75,
+                      top: 90,
                       left: 275,
                       child: Container(
                         decoration: BoxDecoration(

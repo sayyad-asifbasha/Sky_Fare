@@ -3,7 +3,6 @@ import 'package:get_it/get_it.dart';
 import 'package:sky_fare/bloc/get_flight_bloc/get_flight_bloc.dart';
 import 'package:sky_fare/config/routes/routes.dart';
 import 'package:sky_fare/config/routes/routes_name.dart';
-import 'package:sky_fare/pages/Signup.dart';
 import 'package:sky_fare/bloc/signup_bloc/signup_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sky_fare/respository/auth/signup_repository.dart';

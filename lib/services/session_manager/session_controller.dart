@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:sky_fare/model/user/user_model.dart';
 import 'package:sky_fare/services/storage/local_storage.dart';
 
 class SessionController {

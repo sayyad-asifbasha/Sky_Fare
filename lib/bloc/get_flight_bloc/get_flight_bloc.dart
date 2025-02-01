@@ -12,8 +12,8 @@ class GetFlightBloc extends Bloc<get_flight_event, get_flight_state> {
     on<FromDateChanged>(_onFromDateChanged);
     on<ToDateChanged>(_onToDateChanged);
     on<GetFlightButton>(_onGetFlightButton);
-    on<GetSourceList>(_onGetSourceList);
-    on<GetDestinationList>(_onGetDestinationList);
+    on<GetList>(_onGetList);
+    on<GetRoundTrip>(_onGetRoundTrip);
   }
 
   void _onSourceChanged(SourceChanged event, Emitter<get_flight_state> emit) {
@@ -72,9 +72,54 @@ class GetFlightBloc extends Bloc<get_flight_event, get_flight_state> {
           getFlightStatus: GetFlightStatus.error, message: error.toString()));
     });
   }
+  void _onGetRoundTrip(GetRoundTrip event, Emitter<get_flight_state> emit) async {
+    String url =
+        '?from=${state.source}&to=${state.destination}&departureTime=${state.fromDate}';
+    String url2 =
+        '?from=${state.destination}&to=${state.source}&departureTime=${state.toDate}';
 
-  void _onGetSourceList(
-      GetSourceList event, Emitter<get_flight_state> emit) async {
+    emit(state.copyWith(getFlightStatus: GetFlightStatus.loading));
+
+    try {
+      // Fetch outbound flight details
+      final outboundResult = await getFlightRepository.getFlightApi(url);
+      if (outboundResult.flights.isEmpty) {
+        emit(state.copyWith(
+          getFlightStatus: GetFlightStatus.error,
+          message: "Sorry, no outbound flights are available",
+        ));
+        return; // Exit if no outbound flights are found
+      } else {
+        emit(state.copyWith(
+          flights: outboundResult.flights,
+          message: "Outbound flight list fetched successfully",
+        ));
+      }
+
+      // Fetch return flight details
+      final returnResult = await getFlightRepository.getFlightApi(url2);
+      if (returnResult.flights.isEmpty) {
+        emit(state.copyWith(
+          getFlightStatus: GetFlightStatus.error,
+          message: "Sorry, no return flights are available",
+        ));
+      } else {
+        emit(state.copyWith(
+          returnFlights: returnResult.flights,
+          getFlightStatus: GetFlightStatus.success,
+          message: "Both outbound and return flights fetched successfully",
+        ));
+      }
+    } catch (error) {
+      emit(state.copyWith(
+        getFlightStatus: GetFlightStatus.error,
+        message: "Error occurred while fetching flights: ${error.toString()}",
+      ));
+    }
+  }
+
+  void _onGetList(
+      GetList event, Emitter<get_flight_state> emit) async {
     await getFlightRepository.getFlightSourceList().then((value) {
       emit(state.copyWith(
         sourceList: value.sources
@@ -82,10 +127,6 @@ class GetFlightBloc extends Bloc<get_flight_event, get_flight_state> {
     }).onError((error, StackTrace) {
     print(error.toString());
     });
-  }
-
-  void _onGetDestinationList(
-      GetDestinationList event, Emitter<get_flight_state> emit) async {
     await getFlightRepository.getFlightDestinationList().then((value) {
       emit(state.copyWith(
           destinationList: value.destinations
@@ -94,4 +135,5 @@ class GetFlightBloc extends Bloc<get_flight_event, get_flight_state> {
       print(error.toString());
     });
   }
+
 }

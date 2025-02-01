@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sky_fare/config/routes/routes_name.dart';
 import 'package:sky_fare/pages/home.dart';
 import 'package:sky_fare/pages/views.dart';
+import 'package:sky_fare/pages/one_way_booking.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -16,6 +17,8 @@ class Routes {
         return MaterialPageRoute(builder: (context) => const OtpVerification());
       case RoutesNames.homeScreen:
         return MaterialPageRoute(builder: (context) => const Home());
+      case RoutesNames.oneWayBookingScreen:
+        return MaterialPageRoute(builder: (context)=>const one_way_booking());
       default:
         return MaterialPageRoute(builder: (context) {
           return const Scaffold(
